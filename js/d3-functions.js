@@ -1,5 +1,6 @@
 //main file for D3 handling
 
+// set resetbutton to invisible
 $("#resetbtn").hide();
 
 var countryDefaults = {};
@@ -15,7 +16,7 @@ var co2mincolor = "white",
     oilmaxcolor = "blue",
     nodatacolor = "#ccc",
     selectioncolor = "steelblue";
-    var steamcolor = d3.scale.linear().range(["#444", "#ccc"]);
+var steamcolor = d3.scale.linear().range(["#444", "#ccc"]);
 
 var createPaletteScale = function(min, max, minColor, maxColor) {
   return d3.scale.linear().domain([min, max]).range([minColor, maxColor]); // greens
@@ -129,10 +130,6 @@ function updateColors(country) {
 
 function resetColors() {
   d3.selectAll(".line").style("stroke", nodatacolor).style("opacity", .3);
-  // .on("mouseout", function(d) {
-  //   d3.select(this).style("opacity", ".3").style("stroke", nodatacolor);
-  // });
-
   setLineMarkers();
   d3.selectAll(".bar").style("fill", nodatacolor).style("stroke", nodatacolor).on("mouseout", function(d) {
     d3.select(this).style("fill", nodatacolor);

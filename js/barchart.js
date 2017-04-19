@@ -99,31 +99,7 @@ var fillBarChart = function() {
            d3.select(this).style('fill', '#ccc');
          })
          .attr('y', function(d) {
-
-           console.log(y(d.mean));
          return y(d.mean); })
          .attr('height', function(d) { return height - y(d.mean); });
   });
-
-  //   //co2means
-  //   var color = createPaletteScale(min_co2, max_co2, '#ccc', '#000');
-  //
-  //   // This creates the actual bar chart.
-  //   d3.select(".barchartholder")
-  //   .selectAll("div")
-  // .data(co2means10)
-  //   .enter().append("div")
-  //   .style("width", function(d) { return bar_x(d.mean) + "%"; })
-  //   .style("background-color", "#ccc")
-  //   .style("margin-top", "1px")
-  //   .style("color", "black")
-  //   .style("padding", "10px")
-  //   .attr("class", function(d) { return "bar " + d.countryShort })
-  //   .attr("id",function(d) { return d.countryShort })
-  //   .text(function(d) { return d.country + ", " + d3.round(d.mean,3) + " metric tons/capita"; })
-  //   .on("mouseover", function() {
-  //     d3.select(this).style("background-color", "purple");
-  //   }).on("mouseout", function() {
-  //     d3.select(this).style("background-color", "#ccc");
-  //   });
 };
