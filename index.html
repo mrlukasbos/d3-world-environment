@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<head>
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="js/datamaps.min.js"></script>
+  <script src="js/isoconversion.js"></script>
+  <meta charset="UTF-8">
+  <title> Environmental damage over the world </title>
+</meta>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+  <div class="resetbtn" id="resetbtn" onclick="resetSelection()">
+
+<p> You selected <span id="selectedCountryText"> nothing </span>
+  <span>
+    <button class="btn btn-primary"> Reset selection </button>
+  </span>
+</p>
+
+</div>
+  <div class="container">
+    <div class="row">
+      <h1 id="header" style="text-align: center; font-weight: bold; font-size: 40px; margin-top: 4%; margin-bottom: 4%;">Environmental damage per country</h1>
+<hr>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 explanation">
+    <p>
+      Here an overview is shown of the differences between countries and their environmental behaviour.
+      This map indicates is to find relationships of regions. Here can be seen that Africa does not have a lot of energy use,
+      but also the highly developed Europe seems to be relatively decent in their environmental behaviour.
+      America, Canada, Russia and Australia are large countries with a large amount of energy use per capita.
+      <br> <br>
+      Use the buttons on the right to toggle between CO₂, electricity and oil. Use the slider to change the time.
+      Click on a country to filter it's data in all graphs.
+    </p>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-7">
+    <h4 id="title">CO₂ emission per country in metric tons per capita</h4>
+  </div>
+  <div class="col-md-4">
+      <ul class="pagination">
+        <li id="co2button" class="togglebtn active" onclick="showCo2()" href="#"><a>CO₂ emission</a></li>
+        <li id="elecbutton" class="togglebtn"  onclick="showElectricity()" href="#"><a>Electricity usage</a></li>
+        <li id="oilbutton" class="togglebtn"  onclick="showOil()" href="#"><a> Oil usage</a></li>
+      </ul>
+
+  </div>
+  <div class="col-md-1">
+    <h4 id="year"> 2011 </h4>
+  </div>
+</div>
+
+<div class="row">
+  <!-- slider to change time -->
+  <div class="col-xs-1 "> 1960 </div>
+  <div class="col-xs-10">
+    <input id="yearinput" oninput="changeValues()" type="range" min="1960" max="2011" step="1" value="2011">
+  </div>
+  <div class="col-xs-1" style="text-align: center;"> 2011 </div>
+</div>
+<div id="mapholder" style="position: relative; width: 1000px; height: 500px;">
+
+  <div class="legendrow">
+    <div class="legendsquare" id="maplegendlow"> </div> Low
+    <div class="legendsquare" id="maplegendhigh"> </div> High
+    <div class="legendsquare" id="mapnodata"> </div> No data
+  </div>
+
+</div>
+</div>
+
+
+<hr>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 explanation">
+    <p>In these linecharts we can see potential outliers and potential correlations between the three kinds of energy use.
+      Iceland (marked in red) has an enormous increase of electricity and oil usage.
+      We can also see that there are some really small countries, such as qatar (marked in orange) have an incredible amount of CO₂ usage per capita.
+    </p>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="row" >
+    <div class="col-md-4">
+      <h3 class="title linecharttitle" > CO₂ emission (ton/cap)</h3>
+      <div class="linechart linechartholder1"> </div>
+    </div>
+    <div class="col-md-4">
+      <h3 class="title linecharttitle" >Electricity usage (KwH/cap)</h3>
+      <div class="linechart linechartholder2"> </div>
+    </div>
+    <div class="col-md-4">
+      <h3 class="title linecharttitle" >Oil usage (kg/cap)</h3>
+      <div class="linechart linechartholder3"> </div>
+    </div>
+  </div>
+
+  <hr>
+
+
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 explanation">
+      <p>Now it is time to view more about the average damage a country does. Electricity is excluded from this graph, since electricity can also be obtained from green energy sources.
+        This graph is a steamgraph which shows the amount of oil and CO₂ damage over time.
+        <br> The hight of the line is the co2 usage, and the thickness of the line is the oil usage.
+        In this way we can see which country has done the most damage (per capita) in the last 50 years. The graph coming out highest is qatar.
+      </p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="steamGraphHolder col-md-10 col-md-offset-1"> </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 explanation">
+      <p> Of these three kinds of energy use, CO₂ is the one that is most heard of. Over an average of all (measured) years a top 10 has been constructed. Qatar uses an incredible amount of CO₂.
+        These countries need to work hard on their mindset, since these numbers are far from acceptable.
+        Please note that most of these countries are very small. There might be a correlation.
+        Also note that the USA, Canada and Australia are in this top 10 list.
+      </p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="barchartholder col-md-10 col-md-offset-1"> </div>
+  </div>
+
+
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1 explanation">
+      <p> Taking care for our beloved planet is very important, and we should be aware of that.
+      </p>
+    </div>
+  </div>
+
+  <hr>
+
+
+  <div class="row">
+    <p id="help"> <small> Sources: <a href="http://data.un.org/Data.aspx?d=WDI&f=Indicator_Code%3aEN.ATM.CO2E.PC">http://data.un.org/Data.aspx?d=WDI&f=Indicator_Code%3aEN.ATM.CO2E.PC </a>
+      and <a href="http://data.un.org/Data.aspx?d=WDI&f=Indicator_Code%3aEG.USE.PCAP.KG.OE">http://data.un.org/Data.aspx?d=WDI&f=Indicator_Code%3aEG.USE.PCAP.KG.OE </a>
+      and <a href="http://data.un.org/Data.aspx?d=WDI&f=Indicator_Code%3aEG.USE.ELEC.KH.PC">http://data.un.org/Data.aspx?d=WDI&f=Indicator_Code%3aEG.USE.ELEC.KH.PC </a>
+  </small></p>
+    <p id="help"> <small> Examples used: <a href="https://bl.ocks.org/mbostock/3884955">https://bl.ocks.org/mbostock/3884955 </a>
+      and <a href="https://bost.ocks.org/mike/bar/">https://bost.ocks.org/mike/bar/</a>
+      and <a href="https://bl.ocks.org/mbostock/4060954">https://bl.ocks.org/mbostock/4060954</a>.
+
+    </small></p>
+    <p id="help"> <small> Built <!-- by <a href="http://lukasbos.nl"> Lukas Bos </a>  --> using <a href="http://d3js.org">D3.js</a>, <a href="http://datamaps.github.io">Datamaps.js</a> and <a href="http://getbootstrap.com">Bootstrap</a>, May 2016</small></p>
+    <p id="help"> <small> Special thanks to Michiel Overeem for explaining Javascript to me </small></p>
+  </div>
+</div>
+</div>
+<script src="js/d3-functions.js"></script>
+<script src="js/map.js"></script>
+<script src="js/linecharts.js"></script>
+<script src="js/barchart.js"></script>
+<script src="js/steamgraph.js"></script>
+
+</script>
+</body>
